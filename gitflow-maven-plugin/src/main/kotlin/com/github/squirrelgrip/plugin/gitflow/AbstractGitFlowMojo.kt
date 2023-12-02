@@ -900,7 +900,7 @@ abstract class AbstractGitFlowMojo : AbstractMojo() {
      * the git `push` command.
      */
     protected fun gitPush(branchName: String, pushTags: Boolean) {
-        log.info("Pushing '" + branchName + "' branch to '" + gitFlowConfig!!.origin + "'.")
+        log.info("Pushing '" + branchName + "' branch to '" + gitFlowConfig.origin + "'.")
         val args: MutableList<String> = ArrayList()
         args.add("push")
         args.add("--quiet")
@@ -918,17 +918,17 @@ abstract class AbstractGitFlowMojo : AbstractMojo() {
                 throw CommandLineException(e.message, e)
             }
         }
-        args.add(gitFlowConfig!!.origin)
+        args.add(gitFlowConfig.origin)
         args.add(branchName)
         executeGitCommand(*args.toTypedArray<String>())
     }
 
     protected fun gitPushDelete(branchName: String) {
-        log.info("Deleting remote branch '" + branchName + "' from '" + gitFlowConfig!!.origin + "'.")
-        val result = executeGitCommandExitCode("push", "--delete", gitFlowConfig!!.origin, branchName)
+        log.info("Deleting remote branch '" + branchName + "' from '" + gitFlowConfig.origin + "'.")
+        val result = executeGitCommandExitCode("push", "--delete", gitFlowConfig.origin, branchName)
         if (!result.isSuccess) {
             log.warn(
-                "There were some problems deleting remote branch '" + branchName + "' from '" + gitFlowConfig!!.origin + "'."
+                "There were some problems deleting remote branch '" + branchName + "' from '" + gitFlowConfig.origin + "'."
             )
         }
     }
