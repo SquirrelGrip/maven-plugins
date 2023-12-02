@@ -13,6 +13,7 @@
 
     <modules>
         <module>update-maven-plugin</module>
+        <module>gitflow-maven-plugin</module>
     </modules>
 
     <name>${project.artifactId}</name>
