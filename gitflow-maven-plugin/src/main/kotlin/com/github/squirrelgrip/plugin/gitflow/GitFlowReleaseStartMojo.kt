@@ -1,53 +1,72 @@
-package com.github.squirrelgrip.plugin.gitflow;
+package com.github.squirrelgrip.plugin.gitflow
 
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.ArtifactUtils;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.shared.release.versions.VersionParseException;
-import org.codehaus.plexus.util.StringUtils;
-import org.codehaus.plexus.util.cli.CommandLineException;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.apache.maven.artifact.Artifact
+import org.apache.maven.artifact.ArtifactUtils
+import org.apache.maven.plugin.MojoFailureException
+import org.apache.maven.plugins.annotations.Mojo
+import org.apache.maven.plugins.annotations.Parameter
+import org.apache.maven.shared.release.versions.VersionParseException
+import org.codehaus.plexus.util.StringUtils
+import org.codehaus.plexus.util.cli.CommandLineException
 
 @Mojo(name = "release-start", aggregator = true)
-public class GitFlowReleaseStartMojo extends AbstractGitFlowMojo {
-
+class GitFlowReleaseStartMojo : AbstractGitFlowMojo() {
     /**
      * Whether to use the same name of the release branch for every release.
-     * Default is <code>false</code>, i.e. project version will be added to
-     * release branch prefix. <br/>
-     * Will have no effect if the <code>branchName</code> parameter is set.
-     * <br/>
+     * Default is `false`, i.e. project version will be added to
+     * release branch prefix. <br></br>
+     * Will have no effect if the `branchName` parameter is set.
+     * <br></br>
      *
      * Note: By itself the default releaseBranchPrefix is not a valid branch
-     * name. You must change it when setting sameBranchName to <code>true</code>
+     * name. You must change it when setting sameBranchName to `true`
      * .
-     * 
+     *
      * @since 1.2.0
      */
     @Parameter(property = "sameBranchName", defaultValue = "false")
-    private boolean sameBranchName = false;
+    private val sameBranchName = false
 
     /**
      * Whether to allow SNAPSHOT versions in dependencies.
-     * 
+     *
      * @since 1.2.2
      */
     @Parameter(property = "allowSnapshots", defaultValue = "false")
-    private boolean allowSnapshots = false;
+    private val allowSnapshots = false
 
     /**
      * Release version to use instead of the default next release version in non
      * interactive mode.
-     * 
+     *
      * @since 1.3.1
      */
     @Parameter(property = "releaseVersion", defaultValue = "")
-    private String releaseVersion = "";
+    private val releaseVersion = ""
+        get() {
+            // get current project version from pom
+            val currentVersion = currentProjectVersion
+            val defaultVersion = if (tychoBuild) {
+                currentVersion
+            } else {
+                // get default release version
+                GitFlowVersionInfo(currentVersion, versionPolicy).getReleaseVersionString()
+            }
+            var version = if (settings!!.isInteractiveMode) {
+                prompter!!.prompt("What is release version? [$defaultVersion]") { version: String ->
+                    validVersion(
+                        version
+                    )
+                }
+            } else {
+                field
+            }
+            if (StringUtils.isBlank(version)) {
+                log.info("Version is blank. Using default version.")
+                version = defaultVersion
+            }
+            return version
+        }
 
     /**
      * Whether to push to the remote.
@@ -55,17 +74,17 @@ public class GitFlowReleaseStartMojo extends AbstractGitFlowMojo {
      * @since 1.6.0
      */
     @Parameter(property = "pushRemote", defaultValue = "false")
-    private boolean pushRemote;
+    private val pushRemote = false
 
     /**
      * Whether to commit development version when starting the release (vs when
      * finishing the release which is the default). Has effect only when there
      * are separate development and production branches.
-     * 
+     *
      * @since 1.7.0
      */
     @Parameter(property = "commitDevelopmentVersionAtStart", defaultValue = "false")
-    private boolean commitDevelopmentVersionAtStart;
+    private var commitDevelopmentVersionAtStart = false
 
     /**
      * Whether to remove qualifiers from the next development version.
@@ -73,7 +92,7 @@ public class GitFlowReleaseStartMojo extends AbstractGitFlowMojo {
      * @since 1.7.0
      */
     @Parameter(property = "digitsOnlyDevVersion", defaultValue = "false")
-    private boolean digitsOnlyDevVersion = false;
+    private val digitsOnlyDevVersion = false
 
     /**
      * Development version to use instead of the default next development
@@ -82,7 +101,7 @@ public class GitFlowReleaseStartMojo extends AbstractGitFlowMojo {
      * @since 1.7.0
      */
     @Parameter(property = "developmentVersion", defaultValue = "")
-    private String developmentVersion = "";
+    private val developmentVersion = ""
 
     /**
      * Which digit to increment in the next development version. Starts from
@@ -91,196 +110,144 @@ public class GitFlowReleaseStartMojo extends AbstractGitFlowMojo {
      * @since 1.7.0
      */
     @Parameter(property = "versionDigitToIncrement")
-    private Integer versionDigitToIncrement;
+    private val versionDigitToIncrement: Int? = null
 
     /**
      * Start a release branch from this commit (SHA).
-     * 
+     *
      * @since 1.7.0
      */
     @Parameter(property = "fromCommit")
-    private String fromCommit;
+    private val fromCommit: String? = null
 
     /**
      * Whether to use snapshot in release.
-     * 
+     *
      * @since 1.10.0
      */
     @Parameter(property = "useSnapshotInRelease", defaultValue = "false")
-    private boolean useSnapshotInRelease;
+    private val useSnapshotInRelease = false
 
     /**
-     * Name of the created release branch.<br>
+     * Name of the created release branch.<br></br>
      * The effective branch name will be a composite of this branch name and the
-     * <code>releaseBranchPrefix</code>.
-     * 
+     * `releaseBranchPrefix`.
+     *
      * @since 1.14.0
      */
     @Parameter(property = "branchName")
-    private String branchName;
+    private val branchName: String? = null
 
-    /** {@inheritDoc} */
-    @Override
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        validateConfiguration();
-
+    override fun execute() {
+        validateConfiguration()
         try {
             // set git flow configuration
-            initGitFlowConfig();
+            initGitFlowConfig()
 
             // check uncommitted changes
-            checkUncommittedChanges();
-
-            final String releaseBranch = gitFindBranches(gitFlowConfig.releaseBranchPrefix, true);
-
+            checkUncommittedChanges()
+            val releaseBranch = gitFindBranches(gitFlowConfig.releaseBranchPrefix, true)
             if (StringUtils.isNotBlank(releaseBranch)) {
-                throw new MojoFailureException("Release branch already exists. Cannot start release.");
+                throw MojoFailureException("Release branch already exists. Cannot start release.")
             }
-
             if (fetchRemote) {
-                gitFetchRemoteAndCompareCreate(gitFlowConfig.developmentBranch);
+                gitFetchRemoteAndCompareCreate(gitFlowConfig.developmentBranch)
             }
-
-            final String startPoint;
-            if (StringUtils.isNotBlank(fromCommit) && notSameProdDevName()) {
-                startPoint = fromCommit;
+            val startPoint: String?
+            startPoint = if (StringUtils.isNotBlank(fromCommit) && notSameProdDevName()) {
+                fromCommit
             } else {
-                startPoint = gitFlowConfig.developmentBranch;
+                gitFlowConfig.developmentBranch
             }
 
             // need to be in develop to check snapshots and to get correct project version
-            gitCheckout(startPoint);
+            gitCheckout(startPoint!!)
 
             // check snapshots dependencies
             if (!allowSnapshots) {
-                checkSnapshotDependencies();
+                checkSnapshotDependencies()
             }
-
             if (commitDevelopmentVersionAtStart && !notSameProdDevName()) {
-                getLog().warn(
-                        "The commitDevelopmentVersionAtStart will not have effect. "
-                                + "It can be enabled only when there are separate branches for development and production.");
-                commitDevelopmentVersionAtStart = false;
+                log.warn(
+                    "The commitDevelopmentVersionAtStart will not have effect. "
+                        + "It can be enabled only when there are separate branches for development and production."
+                )
+                commitDevelopmentVersionAtStart = false
             }
 
             // get release version
-            final String releaseVersion = getReleaseVersion();
+            val releaseVersion = releaseVersion
 
             // get release branch
-            String fullBranchName = gitFlowConfig.releaseBranchPrefix;
+            var fullBranchName: String? = gitFlowConfig.releaseBranchPrefix
             if (StringUtils.isNotBlank(branchName)) {
-                fullBranchName += branchName;
+                fullBranchName += branchName
             } else if (!sameBranchName) {
-                fullBranchName += releaseVersion;
+                fullBranchName += releaseVersion
             }
-
-            String projectVersion = releaseVersion;
+            var projectVersion = releaseVersion
             if (useSnapshotInRelease && !ArtifactUtils.isSnapshot(projectVersion)) {
-                projectVersion = projectVersion + "-" + Artifact.SNAPSHOT_VERSION;
+                projectVersion = projectVersion + "-" + Artifact.SNAPSHOT_VERSION
             }
-
-            if (useSnapshotInRelease && mavenSession.getUserProperties().get("useSnapshotInRelease") != null) {
-                getLog().warn(
-                        "The useSnapshotInRelease parameter is set from the command line."
-                                + " Don't forget to use it in the finish goal as well."
-                                + " It is better to define it in the project's pom file.");
+            if (useSnapshotInRelease && mavenSession!!.userProperties["useSnapshotInRelease"] != null) {
+                log.warn(
+                    "The useSnapshotInRelease parameter is set from the command line."
+                        + " Don't forget to use it in the finish goal as well."
+                        + " It is better to define it in the project's pom file."
+                )
             }
-
             if (commitDevelopmentVersionAtStart) {
-                commitProjectVersion(projectVersion, commitMessages.getReleaseStartMessage());
+                commitProjectVersion(projectVersion, commitMessages.releaseStartMessage)
 
                 // git branch release/... ...
-                gitCreateBranch(fullBranchName, startPoint);
-
-                final String nextSnapshotVersion = getNextSnapshotVersion(releaseVersion);
-
-                commitProjectVersion(nextSnapshotVersion, commitMessages.getReleaseVersionUpdateMessage());
+                gitCreateBranch(fullBranchName!!, startPoint)
+                val nextSnapshotVersion = getNextSnapshotVersion(releaseVersion)
+                commitProjectVersion(nextSnapshotVersion, commitMessages.releaseVersionUpdateMessage)
 
                 // git checkout release/...
-                gitCheckout(fullBranchName);
+                gitCheckout(fullBranchName)
             } else {
                 // git checkout -b release/... ...
-                gitCreateAndCheckout(fullBranchName, startPoint);
-
-                commitProjectVersion(projectVersion, commitMessages.getReleaseStartMessage());
+                gitCreateAndCheckout(fullBranchName!!, startPoint)
+                commitProjectVersion(projectVersion, commitMessages.releaseStartMessage)
             }
-
             if (installProject) {
-                mvnCleanInstall();
+                mvnCleanInstall()
             }
-
             if (pushRemote) {
                 if (commitDevelopmentVersionAtStart) {
-                    gitPush(gitFlowConfig.developmentBranch, false);
+                    gitPush(gitFlowConfig.developmentBranch, false)
                 }
-
-                gitPush(fullBranchName, false);
+                gitPush(fullBranchName, false)
             }
-        } catch (CommandLineException | VersionParseException e) {
-            throw new MojoFailureException("release-start", e);
+        } catch (e: CommandLineException) {
+            throw MojoFailureException("release-start", e)
+        } catch (e: VersionParseException) {
+            throw MojoFailureException("release-start", e)
         }
     }
 
-    private String getNextSnapshotVersion(String currentVersion) throws MojoFailureException, VersionParseException {
-        final String nextSnapshotVersion;
-        if (!settings.isInteractiveMode() && StringUtils.isNotBlank(developmentVersion)) {
-            nextSnapshotVersion = developmentVersion;
+    fun getNextSnapshotVersion(currentVersion: String): String {
+        val nextSnapshotVersion: String
+        nextSnapshotVersion = if (!settings!!.isInteractiveMode && StringUtils.isNotBlank(developmentVersion)) {
+            developmentVersion
         } else {
-            GitFlowVersionInfo versionInfo = new GitFlowVersionInfo(currentVersion, getVersionPolicy());
+            var versionInfo = GitFlowVersionInfo(currentVersion, versionPolicy)
             if (digitsOnlyDevVersion) {
-                versionInfo = versionInfo.digitsVersionInfo();
+                versionInfo = versionInfo.digitsVersionInfo()
             }
-
-            nextSnapshotVersion = versionInfo.nextSnapshotVersion(versionDigitToIncrement);
+            versionInfo.nextSnapshotVersion(versionDigitToIncrement)
         }
-
         if (StringUtils.isBlank(nextSnapshotVersion)) {
-            throw new MojoFailureException("Next snapshot version is blank.");
+            throw MojoFailureException("Next snapshot version is blank.")
         }
-        return nextSnapshotVersion;
+        return nextSnapshotVersion
     }
 
-    private String getReleaseVersion() throws MojoFailureException, VersionParseException, CommandLineException {
-        // get current project version from pom
-        final String currentVersion = getCurrentProjectVersion();
-
-        String defaultVersion = null;
-        if (tychoBuild) {
-            defaultVersion = currentVersion;
-        } else {
-            // get default release version
-            defaultVersion = new GitFlowVersionInfo(currentVersion, getVersionPolicy()).getReleaseVersionString();
-        }
-
-        if (defaultVersion == null) {
-            throw new MojoFailureException("Cannot get default project version.");
-        }
-
-        String version = null;
-        if (settings.isInteractiveMode()) {
-            version = prompter.prompt("What is release version? [" + defaultVersion + "]", this::validVersion);
-        } else {
-            version = releaseVersion;
-        }
-
-        if (StringUtils.isBlank(version)) {
-            getLog().info("Version is blank. Using default version.");
-            version = defaultVersion;
-        }
-
-        return version;
-    }
-
-    private void commitProjectVersion(String version, String commitMessage) throws CommandLineException, MojoFailureException {
-        // execute if version changed
-        String currentVersion = getCurrentProjectVersion();
-        if (!version.equals(currentVersion)) {
-            mvnSetVersions(version);
-
-            Map<String, String> properties = new HashMap<>();
-            properties.put("version", version);
-
-            gitCommit(commitMessage, properties);
+    fun commitProjectVersion(version: String, commitMessage: String) {
+        if (version != currentProjectVersion) {
+            mvnSetVersions(version)
+            gitCommit(commitMessage, mapOf("version" to version))
         }
     }
 }

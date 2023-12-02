@@ -46,7 +46,7 @@ class GitFlowVersionInfo(
      * Which part of version to increment.
      * @return Next SNAPSHOT version.
      */
-    fun nextSnapshotVersion(index: Int? = null): String? =
+    fun nextSnapshotVersion(index: Int? = null): String =
         nextVersion(index, true)
 
     /**
@@ -59,7 +59,7 @@ class GitFlowVersionInfo(
      * Whether to use SNAPSHOT version.
      * @return Next version.
      */
-    private fun nextVersion(index: Int?, snapshot: Boolean): String? {
+    private fun nextVersion(index: Int?, snapshot: Boolean): String {
         if (versionPolicy != null) {
             return try {
                 val request = VersionPolicyRequest().setVersion(this.toString())
@@ -75,8 +75,7 @@ class GitFlowVersionInfo(
             }
         }
         val digits = digits
-        var nextVersion: String? = null
-        if (digits != null) {
+        val nextVersion = if (digits != null) {
             if (index != null && index >= 0 && index < digits.size) {
                 val origDigitsLength = joinDigitString(digits).length
                 digits[index] = incrementVersionString(digits[index])
@@ -84,16 +83,24 @@ class GitFlowVersionInfo(
                     digits[i] = "0"
                 }
                 val digitsStr = joinDigitString(digits)
-                nextVersion =
-                    digitsStr + if (snapshot) snapshotVersionString.substring(origDigitsLength) else releaseVersionString.substring(
-                        origDigitsLength
-                    )
+                digitsStr + if (snapshot) {
+                    snapshotVersionString.substring(origDigitsLength)
+                } else {
+                    releaseVersionString.substring(origDigitsLength)
+                }
             } else {
-                nextVersion =
-                    if (snapshot) getNextVersion().snapshotVersionString else getNextVersion().releaseVersionString
+                if (snapshot) {
+                    nextVersion.snapshotVersionString
+                } else {
+                    nextVersion.releaseVersionString
+                }
             }
         } else {
-            nextVersion = if (snapshot) snapshotVersionString else releaseVersionString
+            if (snapshot) {
+                snapshotVersionString
+            } else {
+                releaseVersionString
+            }
         }
         return nextVersion
     }
@@ -136,7 +143,8 @@ class GitFlowVersionInfo(
          * otherwise.
          */
         fun isValidVersion(version: String): Boolean {
-            return (StringUtils.isNotBlank(version) && (ALTERNATE_PATTERN.matcher(version).matches() || STANDARD_PATTERN.matcher(version).matches()))
+            return (StringUtils.isNotBlank(version) && (ALTERNATE_PATTERN.matcher(version)
+                .matches() || STANDARD_PATTERN.matcher(version).matches()))
         }
     }
 }
