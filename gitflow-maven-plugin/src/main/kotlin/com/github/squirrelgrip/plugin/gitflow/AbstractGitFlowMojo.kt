@@ -468,17 +468,18 @@ abstract class AbstractGitFlowMojo : AbstractMojo() {
      * Option value.
      */
     private fun gitSetConfig(name: String, value: String) {
-        var value: String? = value
-        if (value == null || value.isEmpty()) {
-            value = if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        val cleanValue = if (value.isEmpty()) {
+            if (Os.isFamily(Os.FAMILY_WINDOWS)) {
                 "\"\""
             } else {
                 ""
             }
+        } else {
+            value
         }
 
         // ignore error exit codes
-        executeGitCommandExitCode("config", name, value)
+        executeGitCommandExitCode("config", name, cleanValue)
     }
 
     /**
@@ -836,7 +837,7 @@ abstract class AbstractGitFlowMojo : AbstractMojo() {
                 )
                 val revlistout = executeGitCommandReturn(
                     "rev-list", "--left-right", "--count",
-                    branchName + "..." + gitFlowConfig!!.origin + "/" + branchName
+                    branchName + "..." + gitFlowConfig.origin + "/" + branchName
                 )
                 val counts = org.apache.commons.lang3.StringUtils.split(revlistout, '\t')
                 if (counts != null && counts.size > 1 && "0" != org.apache.commons.lang3.StringUtils.deleteWhitespace(
@@ -850,7 +851,7 @@ abstract class AbstractGitFlowMojo : AbstractMojo() {
                 }
             }
         } else {
-            log.info("Local branch '" + branchName + "' doesn't exist. Trying check it out from '" + gitFlowConfig!!.origin + "'.")
+            log.info("Local branch '" + branchName + "' doesn't exist. Trying check it out from '" + gitFlowConfig.origin + "'.")
             gitCreateAndCheckout(branchName, gitFlowConfig!!.origin + "/" + branchName)
         }
     }

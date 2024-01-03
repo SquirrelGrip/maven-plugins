@@ -99,7 +99,7 @@
                 <artifactId>${project.artifactId}</artifactId>
                 <version>${project.version}</version>
                 <configuration>
-                    <processTransitive>true</processTransitive>
+                    <processTransitive>false</processTransitive>
                     <ignoredVersions>
                         <ignoredVersion>
                             <groupIdRegEx>com.fasterxml.jackson.*</groupIdRegEx>

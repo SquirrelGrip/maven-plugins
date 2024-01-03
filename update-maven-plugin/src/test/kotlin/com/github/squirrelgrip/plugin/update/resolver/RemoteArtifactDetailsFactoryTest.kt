@@ -54,7 +54,7 @@ internal class RemoteArtifactDetailsFactoryTest {
         assertThat(enrichedArtifact.currentVersion.value).isEqualTo("30.1-jre")
         assertThat(enrichedArtifact.nextVersion.value).isEqualTo("30.1.1-jre")
         assertThat(enrichedArtifact.nextMajor.value).isEqualTo("31.0-jre")
-        assertThat(enrichedArtifact.latest.value).isEqualTo("32.1.3-jre")
+        assertThat(enrichedArtifact.latest.value).isEqualTo("33.0.0-jre")
     }
 
     @Test
