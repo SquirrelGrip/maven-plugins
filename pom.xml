@@ -99,14 +99,16 @@
                 <!--@formatter:off-->
                 <plugin><groupId>com.manamind.jgitflow</groupId><artifactId>jgitflow-maven-plugin</artifactId><version>${jgitflow-maven-plugin.version}</version>
                     <configuration>
-                        <username>${env.GIT_USER}</username>
-                        <password>${env.GIT_PASS}</password>
                         <allowSnapshots>false</allowSnapshots>
+                        <!--suppress UnresolvedMavenProperty -->
+                        <username>${env.GIT_USER}</username>
+                        <!--suppress UnresolvedMavenProperty -->
+                        <password>${env.GIT_TOKEN}</password>
                         <pullMaster>true</pullMaster>
                         <pullDevelop>true</pullDevelop>
                         <pushReleases>true</pushReleases>
                         <pushHotfixes>true</pushHotfixes>
-                        <scmCommentPrefix>AUTO: </scmCommentPrefix>
+                        <scmCommentPrefix>(CI):</scmCommentPrefix>
                         <useReleaseProfile>false</useReleaseProfile>
                     </configuration>
                 </plugin>
