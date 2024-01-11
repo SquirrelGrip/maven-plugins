@@ -9,7 +9,6 @@
 
     <modules>
         <module>update-maven-plugin</module>
-        <module>gitflow-maven-plugin</module>
     </modules>
 
     <name>${project.artifactId}</name>
@@ -200,7 +199,7 @@
                         <groupId>com.manamind.jgitflow</groupId>
                         <artifactId>jgitflow-maven-plugin</artifactId>
                         <version>${jgitflow-maven-plugin.version}</version>
-                        <configuration combine.self="append">
+                        <configuration>
                             <allowSnapshots>true</allowSnapshots>
                             <pushReleases>false</pushReleases>
                             <pushHotfixes>false</pushHotfixes>
