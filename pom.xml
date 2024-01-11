@@ -115,6 +115,12 @@
                 <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-clean-plugin</artifactId><version>${maven-clean-plugin.version}</version></plugin>
                 <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>${maven-compiler-plugin.version}</version></plugin>
                 <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>${maven-dependency-plugin.version}</version></plugin>
+                <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-deploy-plugin</artifactId><version>${maven-deploy-plugin.version}</version>
+                    <configuration>
+                        <deployAtEnd>true</deployAtEnd>
+                        <retryFailedDeploymentCount>3</retryFailedDeploymentCount>
+                    </configuration>
+                </plugin>
                 <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-install-plugin</artifactId><version>${maven-install-plugin.version}</version></plugin>
                 <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-jar-plugin</artifactId><version>${maven-jar-plugin.version}</version></plugin>
                 <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-plugin-plugin</artifactId><version>${maven-plugin-plugin.version}</version>
@@ -186,13 +192,21 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>ossrh</id>
+            <name>Internal Repository</name>
+            <url>http://hostname:port/repo</url>
+        </repository>
+    </distributionManagement>
+
     <profiles>
-        <profile>
-            <id>release</id>
-            <properties>
-                <deployment.url>${project.distributionManagement.repository.url}</deployment.url>
-            </properties>
-        </profile>
+<!--        <profile>-->
+<!--            <id>release</id>-->
+<!--            <properties>-->
+<!--                <deployment.url>${project.distributionManagement.repository.url}</deployment.url>-->
+<!--            </properties>-->
+<!--        </profile>-->
         <profile>
             <id>gitflowStart</id>
             <build>
