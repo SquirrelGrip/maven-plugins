@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.github.squirrelgrip</groupId>
         <artifactId>maven-plugins</artifactId>
-        <version>2.0.0-SNAPSHOT</version>
+        <version>2.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>update-maven-plugin</artifactId>
@@ -16,22 +16,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.github.squirrelgrip</groupId>
-                <artifactId>kotlin-extensions</artifactId>
-                <version>${kotlin-extensions.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <dependency><groupId>com.github.squirrelgrip</groupId><artifactId>kotlin-extensions</artifactId></dependency>
         <dependency><groupId>javax.activation</groupId><artifactId>activation</artifactId><version>${activation.version}</version></dependency>
         <dependency><groupId>org.apache.maven</groupId><artifactId>maven-artifact</artifactId><scope>provided</scope></dependency>
         <dependency><groupId>org.apache.maven</groupId><artifactId>maven-core</artifactId><scope>provided</scope></dependency>
-        <dependency><groupId>org.apache.maven</groupId><artifactId>maven-model</artifactId><scope>provided</scope></dependency>
         <dependency><groupId>org.apache.maven</groupId><artifactId>maven-plugin-api</artifactId><scope>provided</scope></dependency>
         <dependency><groupId>org.apache.maven.doxia</groupId><artifactId>doxia-sink-api</artifactId><scope>provided</scope></dependency>
         <dependency><groupId>org.apache.maven.doxia</groupId><artifactId>doxia-site-renderer</artifactId><scope>provided</scope></dependency>
@@ -99,7 +88,7 @@
                 <artifactId>${project.artifactId}</artifactId>
                 <version>${project.version}</version>
                 <configuration>
-                    <processTransitive>true</processTransitive>
+                    <processTransitive>false</processTransitive>
                     <ignoredVersions>
                         <ignoredVersion>
                             <groupIdRegEx>com.fasterxml.jackson.*</groupIdRegEx>
