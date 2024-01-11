@@ -201,12 +201,12 @@
     </distributionManagement>
 
     <profiles>
-<!--        <profile>-->
-<!--            <id>release</id>-->
-<!--            <properties>-->
-<!--                <deployment.url>${project.distributionManagement.repository.url}</deployment.url>-->
-<!--            </properties>-->
-<!--        </profile>-->
+        <profile>
+            <id>release</id>
+            <properties>
+                <deployment.url>${project.distributionManagement.repository.url}</deployment.url>
+            </properties>
+        </profile>
         <profile>
             <id>gitflowStart</id>
             <build>
