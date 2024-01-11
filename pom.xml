@@ -192,14 +192,6 @@
         </plugins>
     </build>
 
-    <distributionManagement>
-        <repository>
-            <id>ossrh</id>
-            <name>Internal Repository</name>
-            <url>http://hostname:port/repo</url>
-        </repository>
-    </distributionManagement>
-
     <profiles>
         <profile>
             <id>release</id>
