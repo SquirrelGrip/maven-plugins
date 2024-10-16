@@ -35,4 +35,10 @@ data class Version(
 
     override fun compareTo(other: Version): Int =
         semver.compareTo(other.semver)
+
+    override fun toString(): String =
+        if (value == "0")
+            ""
+        else
+            value
 }
