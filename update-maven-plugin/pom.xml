@@ -18,6 +18,7 @@
 
     <dependencies>
         <dependency><groupId>com.github.squirrelgrip</groupId><artifactId>kotlin-extensions</artifactId></dependency>
+        <dependency><groupId>com.vdurmont</groupId><artifactId>semver4j</artifactId></dependency>
         <dependency><groupId>javax.activation</groupId><artifactId>activation</artifactId><version>${activation.version}</version></dependency>
         <dependency><groupId>org.apache.maven</groupId><artifactId>maven-artifact</artifactId><scope>provided</scope></dependency>
         <dependency><groupId>org.apache.maven</groupId><artifactId>maven-core</artifactId><scope>provided</scope></dependency>

@@ -21,9 +21,9 @@ data class UpdateArtifact(
     val nextVersion: Version = Version.NO_VERSION,
     @JsonProperty("status")
     val status: String,
-    @JacksonXmlElementWrapper(useWrapping = true, localName = "incrementals")
-    @JsonProperty("incrementals")
-    val incrementals: List<Version>? = emptyList(),
+    @JacksonXmlElementWrapper(useWrapping = true, localName = "patches")
+    @JsonProperty("patches")
+    val patches: List<Version>? = emptyList(),
     @JacksonXmlElementWrapper(useWrapping = true, localName = "minors")
     @JsonProperty("minors")
     val minors: List<Version>? = emptyList(),
@@ -36,6 +36,6 @@ data class UpdateArtifact(
             groupId,
             artifactId,
             currentVersion.resolve(project),
-            (incrementals ?: emptyList()) + (minors ?: emptyList()) + (majors ?: emptyList())
+            (patches ?: emptyList()) + (minors ?: emptyList()) + (majors ?: emptyList())
         )
 }

@@ -37,7 +37,7 @@ class VersionDeserializerTest {
         val test: TestObject = """<Test></Test>""".toInstance()
 
         assertThat(test.version).isNotNull()
-        assertThat(test.version.value).isEqualTo("")
+        assertThat(test.version.value).isEqualTo("0")
     }
 
     @Test

@@ -79,12 +79,14 @@
         <mockito-kotlin.version>5.2.1</mockito-kotlin.version>
         <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
         <versions-maven-plugin.version>2.16.2</versions-maven-plugin.version>
+        <semver4j.version>3.1.0</semver4j.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <!--@formatter:off-->
             <dependency><groupId>com.github.squirrelgrip</groupId><artifactId>kotlin-extensions</artifactId><version>${kotlin-extensions.version}</version></dependency>
+            <dependency><groupId>com.vdurmont</groupId><artifactId>semver4j</artifactId><version>${semver4j.version}</version></dependency>
             <dependency><groupId>javax.activation</groupId><artifactId>activation</artifactId><version>${activation.version}</version></dependency>
             <dependency><groupId>org.apache.maven</groupId><artifactId>maven-artifact</artifactId><version>${maven-artifact.version}</version></dependency>
             <dependency><groupId>org.apache.maven</groupId><artifactId>maven-core</artifactId><version>${maven-core.version}</version></dependency>

@@ -21,7 +21,7 @@ class VersionTest {
         assertThat("30.1-jre", "31.0-jre")
         assertThat("30.1-jre", "31.0.1-jre")
         assertThat("30.1-jre", "30.1.1-jre")
-        assertThat("30.1-jre", "30.1.0-jre")
+        assertThat("30.1.0-jre", "30.1.0-jre")
         assertThat("1.6.20-M1", "1.6.20-M2")
         assertThat("1.6.20-M1", "1.6.20")
         assertThat("1.6.20-ALPHA1", "1.6.20-BETA1")
@@ -67,10 +67,10 @@ class VersionTest {
         partsEquals("31.1-jre", 31, 1, 0)
     }
 
-    fun partsEquals(version: String, major: Int, minor: Int, increment: Int) {
+    fun partsEquals(version: String, major: Int, minor: Int, patch: Int) {
         assertThat(Version(version).major).isEqualTo(major)
         assertThat(Version(version).minor).isEqualTo(minor)
-        assertThat(Version(version).increment).isEqualTo(increment)
+        assertThat(Version(version).patch).isEqualTo(patch)
     }
 
     fun assertThat(lower: String, upper: String) {

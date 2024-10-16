@@ -18,7 +18,7 @@ abstract class AbstractUpdateReport : AbstractDoxiaReport() {
             "ArtifactId",
             "Version",
             "Next Version",
-            "Latest Incremental",
+            "Latest Patch",
             "Next Minor",
             "Latest Minor",
             "Next Major",

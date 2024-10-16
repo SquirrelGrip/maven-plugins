@@ -7,8 +7,8 @@ data class Summary(
     val usingLastVersion: Int = 0,
     @JsonProperty("nextVersionAvailable")
     val nextVersionAvailable: Int = 0,
-    @JsonProperty("nextIncremetalAvailable")
-    val nextIncremetalAvailable: Int = 0,
+    @JsonProperty("nextPatchAvailable")
+    val nextPatchAvailable: Int = 0,
     @JsonProperty("nextMinorAvailable")
     val nextMinorAvailable: Int = 0,
     @JsonProperty("nextMajorAvailable")

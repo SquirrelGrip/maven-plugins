@@ -26,7 +26,7 @@ data class ArtifactDetails(
             true
         }
 
-    val latestIncremental: Version
+    val latestPatch: Version
         get() = lastVersion {
             it.major == currentVersion.major && it.minor == currentVersion.minor
         }
@@ -63,7 +63,7 @@ data class ArtifactDetails(
             artifactId,
             currentVersion.toString(),
             nextVersion.toString(),
-            latestIncremental.toString(),
+            latestPatch.toString(),
             nextMinor.toString(),
             latestMinor.toString(),
             nextMajor.toString(),
