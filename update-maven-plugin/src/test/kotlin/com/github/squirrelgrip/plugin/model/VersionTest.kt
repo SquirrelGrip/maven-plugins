@@ -4,7 +4,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class VersionTest {
-
     @Test
     fun compare() {
         assertThat("0", "0.1")
@@ -26,25 +25,29 @@ class VersionTest {
         assertThat("1.6.20-M1", "1.6.20")
         assertThat("1.6.20-ALPHA1", "1.6.20-BETA1")
         assertThat("1.6.20-ALPHA2", "1.6.20-BETA1")
+        assertThat("9.0", "10.0")
+        assertThat("4.0.0-M9", "4.0.0-M16")
     }
 
     @Test
     fun sort() {
         val current = Version("2.30")
-        val version = listOf(
-            Version("2.31"),
-            Version("2.35"),
-            Version("2.26"),
-            Version("2.32"),
-            Version("2.33"),
-            Version("3.0.0-M1"),
-            Version("3.0.0-RC2"),
-            Version("2.34"),
-            Version("3.0.0"),
-            Version("3.0.0-M6"),
-        ).sorted().first {
-            it > current
-        }
+        val version =
+            listOf(
+                Version("2.31"),
+                Version("2.35"),
+                Version("2.26"),
+                Version("2.32"),
+                Version("2.33"),
+                Version("3.0.0-M1"),
+                Version("3.0.0-RC2"),
+                Version("2.34"),
+                Version("3.0.0"),
+                Version("3.0.0-M6"),
+                Version("3.0.0-M19")
+            ).sorted().first {
+                it > current
+            }
 
         assertThat(version).isEqualTo(Version("2.31"))
     }
@@ -65,15 +68,24 @@ class VersionTest {
         partsEquals("5.8.1-RC1", 5, 8, 1)
         partsEquals("31.0.1-jre", 31, 0, 1)
         partsEquals("31.1-jre", 31, 1, 0)
+        partsEquals("4.3.2-M1", 4, 3, 2)
     }
 
-    fun partsEquals(version: String, major: Int, minor: Int, patch: Int) {
+    fun partsEquals(
+        version: String,
+        major: Int,
+        minor: Int,
+        patch: Int
+    ) {
         assertThat(Version(version).major).isEqualTo(major)
         assertThat(Version(version).minor).isEqualTo(minor)
         assertThat(Version(version).patch).isEqualTo(patch)
     }
 
-    fun assertThat(lower: String, upper: String) {
+    fun assertThat(
+        lower: String,
+        upper: String
+    ) {
         assertThat(Version(lower)).isLessThanOrEqualTo(Version(upper))
         assertThat(Version(upper)).isGreaterThanOrEqualTo(Version(lower))
     }

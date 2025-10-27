@@ -35,57 +35,62 @@
     </scm>
 
     <properties>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.target>17</maven.compiler.target>
 
         <activation.version>1.1.1</activation.version>
-        <assertj.version>3.26.3</assertj.version>
-        <dokka-maven-plugin.version>1.9.20</dokka-maven-plugin.version>
+        <assertj.version>3.27.6</assertj.version>
+        <central-publishing-maven-plugin.version>0.9.0</central-publishing-maven-plugin.version>
+        <dokka-maven-plugin.version>2.1.0</dokka-maven-plugin.version>
         <doxia.version>2.0.0</doxia.version>
         <doxia-sink-api.version>2.0.0</doxia-sink-api.version>
-        <extra-enforcer-rules.version>1.3</extra-enforcer-rules.version>
-        <httpclient5.version>5.4</httpclient5.version>
+        <extra-enforcer-rules.version>1.11.0</extra-enforcer-rules.version>
+        <httpclient5.version>5.5.1</httpclient5.version>
         <httpcore5.version>5.2.4</httpcore5.version>
         <jgitflow-maven-plugin.version>1.0.0</jgitflow-maven-plugin.version>
-        <junit-jupiter.version>5.11.2</junit-jupiter.version>
-        <kotlin-extensions.version>1.3.12</kotlin-extensions.version>
-        <kotlin.version>2.0.21</kotlin.version>
-        <kotlin-maven-plugin.version>2.0.21</kotlin-maven-plugin.version>
-        <kotlinx-coroutines.version>1.9.0</kotlinx-coroutines.version>
+        <junit-jupiter.version>6.0.0</junit-jupiter.version>
+        <kotlin-extensions.version>1.6.4</kotlin-extensions.version>
+        <kotlin.version>2.2.21</kotlin.version>
+        <kotlin-maven-plugin.version>2.2.21</kotlin-maven-plugin.version>
+        <kotlinx-coroutines.version>1.10.2</kotlinx-coroutines.version>
         <maven-artifact.version>${maven-core.version}</maven-artifact.version>
-        <maven-clean-plugin.version>3.4.0</maven-clean-plugin.version>
-        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
-        <maven-core.version>3.9.9</maven-core.version>
-        <maven-dependency-plugin.version>3.8.0</maven-dependency-plugin.version>
-        <maven-deploy-plugin.version>3.1.3</maven-deploy-plugin.version>
-        <maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
-        <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
-        <maven-install-plugin.version>3.1.3</maven-install-plugin.version>
+        <maven-antrun-plugin.version>3.2.0</maven-antrun-plugin.version>
+        <maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
+        <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
+        <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
+        <maven-core.version>3.9.11</maven-core.version>
+        <maven-dependency-plugin.version>3.9.0</maven-dependency-plugin.version>
+        <maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
+        <maven-enforcer-plugin.version>3.6.2</maven-enforcer-plugin.version>
+        <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
+        <maven-install-plugin.version>3.1.4</maven-install-plugin.version>
         <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
         <maven-model.version>${maven-core.version}</maven-model.version>
-        <maven-plugin-annotations.version>3.15.0</maven-plugin-annotations.version>
+        <maven-plugin-annotations.version>3.15.2</maven-plugin-annotations.version>
         <maven-plugin-api.version>${maven-core.version}</maven-plugin-api.version>
-        <maven-plugin-plugin.version>3.15.0</maven-plugin-plugin.version>
+        <maven-plugin-plugin.version>3.15.2</maven-plugin-plugin.version>
         <maven-release-plugin.version>3.1.1</maven-release-plugin.version>
         <maven-reporting-api.version>4.0.0-M9</maven-reporting-api.version>
         <maven-reporting-impl.version>4.0.0</maven-reporting-impl.version>
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
-        <maven-scm-plugin.version>2.1.0</maven-scm-plugin.version>
-        <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
+        <maven-scm-plugin.version>2.2.1</maven-scm-plugin.version>
+        <maven-shade-plugin.version>3.6.1</maven-shade-plugin.version>
         <maven-shared-utils.version>3.4.2</maven-shared-utils.version>
-        <maven-site-plugin.version>4.0.0-M13</maven-site-plugin.version>
+        <maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
-        <maven-surefire-plugin.version>3.5.1</maven-surefire-plugin.version>
-        <mockito.version>5.14.2</mockito.version>
-        <mockito-kotlin.version>5.4.0</mockito-kotlin.version>
+        <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
+        <mockito.version>5.20.0</mockito.version>
+        <mockito-kotlin.version>6.1.0</mockito-kotlin.version>
         <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
         <semver4j.version>3.1.0</semver4j.version>
-        <versions-maven-plugin.version>2.17.1</versions-maven-plugin.version>
+        <sonar-maven-plugin.version>5.2.0.4988</sonar-maven-plugin.version>
+        <spotless-maven-plugin.version>3.0.0</spotless-maven-plugin.version>
+        <versions-maven-plugin.version>2.19.1</versions-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <!--@formatter:off-->
-            <dependency><groupId>com.github.squirrelgrip</groupId><artifactId>kotlin-extensions</artifactId><version>${kotlin-extensions.version}</version></dependency>
+            <dependency><groupId>com.github.squirrelgrip</groupId><artifactId>kotlin-extensions-xml</artifactId><version>${kotlin-extensions.version}</version></dependency>
             <dependency><groupId>com.vdurmont</groupId><artifactId>semver4j</artifactId><version>${semver4j.version}</version></dependency>
             <dependency><groupId>javax.activation</groupId><artifactId>activation</artifactId><version>${activation.version}</version></dependency>
             <dependency><groupId>org.apache.maven</groupId><artifactId>maven-artifact</artifactId><version>${maven-artifact.version}</version></dependency>
@@ -128,6 +133,8 @@
                         <useReleaseProfile>false</useReleaseProfile>
                     </configuration>
                 </plugin>
+                <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-antrun-plugin</artifactId><version>${maven-antrun-plugin.version}</version></plugin>
+                <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-assembly-plugin</artifactId><version>${maven-assembly-plugin.version}</version></plugin>
                 <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-clean-plugin</artifactId><version>${maven-clean-plugin.version}</version></plugin>
                 <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>${maven-compiler-plugin.version}</version></plugin>
                 <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>${maven-dependency-plugin.version}</version></plugin>
@@ -148,7 +155,7 @@
                                 <excludes><exclude>org.apache.logging.log4j:*:[2.17]</exclude></excludes>
                             </bannedDependencies>
                             <dependencyConvergence />
-                            <requireJavaVersion><version>11</version></requireJavaVersion>
+                            <requireJavaVersion><version>${maven.compiler.target}</version></requireJavaVersion>
                             <requireMavenVersion><version>3.8.4</version></requireMavenVersion>
                         </rules>
                         <fail>true</fail>
@@ -157,10 +164,8 @@
                 <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-gpg-plugin</artifactId><version>${maven-gpg-plugin.version}</version>
                     <configuration>
                         <executable>gpg</executable>
-                        <!--suppress UnresolvedMavenProperty -->
-                        <keyname>${env.GPG_KEYNAME}</keyname>
-                        <!--suppress UnresolvedMavenProperty -->
-                        <passphrase>${env.GPG_PASSPHRASE}</passphrase>
+                        <keyEnvName>GPG_KEYNAME</keyEnvName>
+                        <passphraseEnvName>GPG_PASSPHRASE</passphraseEnvName>
                     </configuration>
                     <executions>
                         <execution><id>sign-artifacts</id><phase>deploy</phase><goals><goal>sign</goal></goals></execution>
@@ -180,7 +185,9 @@
                 <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-scm-plugin</artifactId><version>${maven-scm-plugin.version}</version>
                     <configuration>
                         <providerImplementations><git>jgit</git></providerImplementations>
+                        <!--suppress UnresolvedMavenProperty -->
                         <username>${env.GIT_USER}</username>
+                        <!--suppress UnresolvedMavenProperty -->
                         <password>${env.GIT_TOKEN}</password>
                     </configuration>
                     <dependencies>
@@ -215,12 +222,14 @@
                     </executions>
                 </plugin>
                 <plugin><groupId>org.codehaus.mojo</groupId><artifactId>versions-maven-plugin</artifactId><version>${versions-maven-plugin.version}</version></plugin>
-                <plugin><groupId>org.sonatype.plugins</groupId><artifactId>nexus-staging-maven-plugin</artifactId><version>${nexus-staging-maven-plugin.version}</version>
+                <plugin><groupId>org.sonarsource.scanner.maven</groupId><artifactId>sonar-maven-plugin</artifactId><version>${sonar-maven-plugin.version}</version></plugin>
+                <plugin>
+                    <groupId>org.sonatype.central</groupId><artifactId>central-publishing-maven-plugin</artifactId><version>${central-publishing-maven-plugin.version}</version>
                     <extensions>true</extensions>
                     <configuration>
-                        <serverId>ossrh</serverId>
-                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                        <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        <autoPublish>true</autoPublish>
+                        <publishingServerId>central</publishingServerId>
+                        <waitUntil>published</waitUntil>
                     </configuration>
                 </plugin>
                 <!--@formatter:on-->
@@ -229,20 +238,40 @@
 
         <plugins>
             <!--@formatter:off-->
-<!--            <plugin><groupId>com.diffplug.spotless</groupId><artifactId>spotless-maven-plugin</artifactId></plugin>-->
+            <plugin><groupId>com.diffplug.spotless</groupId><artifactId>spotless-maven-plugin</artifactId><version>${spotless-maven-plugin.version}</version>
+                <configuration>
+                    <ratchetFrom>origin/master</ratchetFrom>
+                    <antlr4>
+                        <includes>
+                            <include>src/*/antlr4/**/*.g4</include>
+                        </includes>
+                        <antlr4Formatter>
+                            <version>1.2.1</version>
+                        </antlr4Formatter>
+                    </antlr4>
+                    <kotlin>
+                        <includes>
+                            <include>src/main/kotlin/**/*.kt</include>
+                            <include>src/test/kotlin/**/*.kt</include>
+                        </includes>
+                        <ktlint>
+                            <version>1.7.1</version>
+                        </ktlint>
+                    </kotlin>
+                </configuration>
+            </plugin>
+            <plugin><groupId>com.diffplug.spotless</groupId><artifactId>spotless-maven-plugin</artifactId></plugin>
             <plugin><groupId>com.manamind.jgitflow</groupId><artifactId>jgitflow-maven-plugin</artifactId><version>${jgitflow-maven-plugin.version}</version></plugin>
             <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-scm-plugin</artifactId><version>${maven-scm-plugin.version}</version></plugin>
             <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-source-plugin</artifactId><version>${maven-source-plugin.version}</version></plugin>
             <plugin><groupId>org.codehaus.mojo</groupId><artifactId>versions-maven-plugin</artifactId><version>${versions-maven-plugin.version}</version></plugin>
-<!--            <plugin><groupId>org.jacoco</groupId><artifactId>jacoco-maven-plugin</artifactId><version>${jacoco-maven-plugin.version}</version></plugin>-->
-<!--            <plugin><groupId>org.owasp</groupId><artifactId>dependency-check-maven</artifactId><version>${dependency-check-maven.version}</version></plugin>-->
-<!--            <plugin><groupId>org.sonarsource.scanner.maven</groupId><artifactId>sonar-maven-plugin</artifactId><version>${sonar-maven-plugin.version}</version></plugin>-->
 
             <!-- Deploy Phase -->
             <plugin><groupId>org.jetbrains.dokka</groupId><artifactId>dokka-maven-plugin</artifactId><version>${dokka-maven-plugin.version}</version></plugin>
             <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-gpg-plugin</artifactId><version>${maven-gpg-plugin.version}</version></plugin>
             <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-deploy-plugin</artifactId><version>${maven-deploy-plugin.version}</version></plugin>
-            <plugin><groupId>org.sonatype.plugins</groupId><artifactId>nexus-staging-maven-plugin</artifactId><version>${nexus-staging-maven-plugin.version}</version></plugin>
+            <plugin><groupId>org.sonarsource.scanner.maven</groupId><artifactId>sonar-maven-plugin</artifactId><version>${sonar-maven-plugin.version}</version></plugin>
+            <plugin><groupId>org.sonatype.central</groupId><artifactId>central-publishing-maven-plugin</artifactId><version>${central-publishing-maven-plugin.version}</version></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><configuration><source>8</source><target>8</target></configuration></plugin>
             <!--@formatter:on-->
         </plugins>
     </build>

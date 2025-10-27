@@ -11,13 +11,13 @@
     <packaging>maven-plugin</packaging>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
-        <dependency><groupId>com.github.squirrelgrip</groupId><artifactId>kotlin-extensions</artifactId></dependency>
+        <dependency><groupId>com.github.squirrelgrip</groupId><artifactId>kotlin-extensions-xml</artifactId></dependency>
         <dependency><groupId>com.vdurmont</groupId><artifactId>semver4j</artifactId></dependency>
         <dependency><groupId>javax.activation</groupId><artifactId>activation</artifactId><version>${activation.version}</version></dependency>
         <dependency><groupId>org.apache.maven</groupId><artifactId>maven-artifact</artifactId><scope>provided</scope></dependency>
@@ -91,36 +91,15 @@
                 <configuration>
                     <processTransitive>false</processTransitive>
                     <ignoredVersions>
-                        <ignoredVersion>
-                            <groupIdRegEx>com.fasterxml.jackson.*</groupIdRegEx>
-                            <artifactIdRegEx>jackson-.*</artifactIdRegEx>
-                            <version>.*-rc\d*</version>
-                        </ignoredVersion>
-                        <ignoredVersion>
-                            <groupId>com.google.guava</groupId>
-                            <artifactId>guava</artifactId>
-                            <version>.*-android</version>
-                        </ignoredVersion>
-                        <ignoredVersion>
-                            <groupId>org.jetbrains.kotlin</groupId>
-                            <artifactIdRegEx>kotlin-.*</artifactIdRegEx>
-                            <version>.*-(?:Alpha|Beta|RC)\d*</version>
-                        </ignoredVersion>
-                        <ignoredVersion>
-                            <groupId>org.jetbrains.kotlinx</groupId>
-                            <artifactIdRegEx>kotlinx-.*</artifactIdRegEx>
-                            <version>.*-(?:Alpha|Beta|RC)\d*</version>
-                        </ignoredVersion>
-                        <ignoredVersion>
-                            <groupId>org.apache.maven</groupId>
-                            <artifactIdRegEx>.*</artifactIdRegEx>
-                            <version>.*-alpha-\d+</version>
-                        </ignoredVersion>
-                        <ignoredVersion>
-                            <groupId>org.elasticsearch.client</groupId>
-                            <artifactIdRegEx>.*</artifactIdRegEx>
-                            <version>.*-alpha\d</version>
-                        </ignoredVersion>
+                        <ignoredVersion><groupIdRegEx>com.fasterxml.jackson.*</groupIdRegEx><artifactIdRegEx>jackson-.*</artifactIdRegEx><version>.*-rc\d*</version></ignoredVersion>
+                        <ignoredVersion><groupIdRegEx>org.apache.maven.*</groupIdRegEx><artifactIdRegEx>.*</artifactIdRegEx><version>.*-(?:rc|alpha|beta)-\d*</version></ignoredVersion>
+                        <ignoredVersion><groupId>com.google.guava</groupId><artifactId>guava</artifactId><version>.*-android</version></ignoredVersion>
+                        <ignoredVersion><groupId>org.jetbrains.kotlin</groupId><artifactIdRegEx>kotlin-.*</artifactIdRegEx><version>.*-(?:Alpha|Beta|RC)\d*</version></ignoredVersion>
+                        <ignoredVersion><groupId>org.jetbrains.kotlinx</groupId><artifactIdRegEx>kotlinx-.*</artifactIdRegEx><version>.*-(?:Alpha|Beta|RC)\d*</version></ignoredVersion>
+                        <ignoredVersion><groupId>org.apache.maven</groupId><artifactIdRegEx>.*</artifactIdRegEx><version>.*-alpha-\d+</version></ignoredVersion>
+                        <ignoredVersion><groupId>org.elasticsearch.client</groupId><artifactIdRegEx>.*</artifactIdRegEx><version>.*-alpha\d</version></ignoredVersion>
+                        <ignoredVersion><groupId>org.apache.httpcomponents.client5</groupId><artifactId>httpclient5</artifactId><version>.*-alpha\d</version></ignoredVersion>
+                        <ignoredVersion><groupId>org.assertj</groupId><artifactId>assertj-core</artifactId><version>.*-(?:M)\d</version></ignoredVersion>
                     </ignoredVersions>
                 </configuration>
             </plugin>
