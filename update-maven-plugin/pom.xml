@@ -9,6 +9,8 @@
     </parent>
     <artifactId>update-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
+    <name>${project.artifactId}</name>
+    <url>${project.scm.url}</url>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
